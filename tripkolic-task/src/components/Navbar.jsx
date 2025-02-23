@@ -1,30 +1,48 @@
-/** @jsxImportSource react */
 import React, { useState } from 'react';
-import { FaBars, FaTimes } from 'react-icons/fa';
+import { FaBars, FaTimes, FaHeart, FaShoppingCart, FaUser } from 'react-icons/fa';
 
 const categories = {
-  Tours: ['Island Tour', 'Land Tour', 'Safari'],
-  Tickets: ['Concert', 'Museum', 'Show'],
-  Rent: ['Car', 'Bike', 'Scooter'],
-  Transfer: ['Airport', 'Hotel', 'City']
+  Tours: ['Adventure', 'Cultural', 'Family', 'Luxury'],
+  Tickets: ['Concerts', 'Sports', 'Theater'],
+  Rent: ['Cars', 'Bikes', 'Apartments'],
+  Transfer: ['Airport', 'City', 'Hotel'],
 };
 
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState('Tours');
-  const [filters, setFilters] = useState(categories['Tours']);
+  const [selectedFilters, setSelectedFilters] = useState([]);
 
   const handleCategoryChange = (category) => {
     setSelectedCategory(category);
-    setFilters(categories[category]);
+    setSelectedFilters([]);
+  };
+
+  const toggleFilter = (filter) => {
+    setSelectedFilters((prev) =>
+      prev.includes(filter)
+        ? prev.filter((item) => item !== filter)
+        : [filter]
+    );
   };
 
   return (
-    <div className="bg-orange-500 p-4 flex justify-between items-center text-white">
-      <h1 className="text-xl font-bold">Tripkolic</h1>
-      <button onClick={() => setIsOpen(true)} className="text-2xl">
-        <FaBars />
-      </button>
+    <div className="bg-[#F78410] text-white">
+      <div className="container mx-auto max-w-4xl flex items-center p-4 relative">
+        <div className="flex items-center">
+          <button onClick={() => setIsOpen(true)} className="mr-4">
+            <FaBars size={24} />
+          </button>
+        </div>
+        <div className="absolute left-1/2 transform -translate-x-1/2">
+          <img src="/path-to-your-logo.png" alt="Logo" className="h-10" />
+        </div>
+        <div className="ml-auto flex gap-4">
+          <FaHeart size={24} />
+          <FaShoppingCart size={24} />
+          <FaUser size={24} />
+        </div>
+      </div>
 
       {isOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
@@ -36,48 +54,53 @@ function Navbar() {
               </button>
             </div>
 
-            {/* Category Selection */}
             <div className="mb-4">
               <label className="block text-lg font-semibold mb-2 text-gray-800">Select Category</label>
-              <select
-                value={selectedCategory}
-                onChange={(e) => handleCategoryChange(e.target.value)}
-                className="w-full p-2 border rounded-md bg-white text-gray-800"
-              >
-                {['Tours', 'Tickets', 'Rent', 'Transfer'].map((category) => (
-                  <option key={category} value={category} className="text-gray-800">
+              <div className="flex gap-2">
+                {Object.keys(categories).map((category) => (
+                  <button
+                    key={category}
+                    onClick={() => handleCategoryChange(category)}
+                    className={`px-3 py-1 rounded-md text-gray-800 ${
+                      selectedCategory === category ? 'bg-[#E07516] text-white' : 'bg-gray-200'
+                    }`}
+                  >
                     {category}
-                  </option>
+                  </button>
                 ))}
-              </select>
+              </div>
             </div>
 
-            {/* Filters based on Category */}
             <div>
               <h3 className="text-lg font-semibold text-gray-800">Filters for {selectedCategory}</h3>
-              <ul className="mt-2 space-y-2">
-                {filters.map((filter) => (
-                  <li key={filter} className="p-2 border rounded-md bg-gray-200 text-gray-800">
+              <div className="flex flex-wrap gap-2 mt-2">
+                {categories[selectedCategory].map((filter) => (
+                  <button
+                    key={filter}
+                    onClick={() => toggleFilter(filter)}
+                    className={`px-3 py-1 rounded-md text-gray-800 ${
+                      selectedFilters.includes(filter) ? 'bg-[#E07516] text-white' : 'bg-gray-200'
+                    }`}
+                  >
                     {filter}
-                  </li>
+                  </button>
                 ))}
-              </ul>
+              </div>
             </div>
 
-            {/* Actions */}
             <div className="mt-6 flex justify-between">
               <button
                 onClick={() => {
                   setSelectedCategory('Tours');
-                  setFilters(categories['Tours']);
+                  setSelectedFilters([]);
                 }}
-                className="px-4 py-2 bg-gray-300 rounded-md hover:bg-gray-400 text-gray-800"
+                className="px-4 py-2 bg-gray-300 text-gray-800 rounded-md hover:bg-gray-400"
               >
                 Reset
               </button>
               <button
                 onClick={() => setIsOpen(false)}
-                className="px-4 py-2 bg-orange-500 text-white rounded-md hover:bg-orange-600"
+                className="px-4 py-2 bg-[#F78410] text-white rounded-md hover:bg-[#E07516]"
               >
                 Apply
               </button>

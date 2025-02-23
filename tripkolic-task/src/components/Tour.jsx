@@ -1,4 +1,3 @@
-/** @jsxImportSource react */
 import React, { useState } from 'react';
 import { FaStar, FaHeart } from 'react-icons/fa';
 
