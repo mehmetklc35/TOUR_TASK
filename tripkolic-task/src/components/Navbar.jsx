@@ -35,7 +35,7 @@ function Navbar() {
           </button>
         </div>
         <div className="absolute left-1/2 transform -translate-x-1/2">
-          <img src="/path-to-your-logo.png" alt="Logo" className="h-10" />
+          <img src="https://i.pinimg.com/736x/a6/30/b9/a630b90cf7223853dfdec7e4ffc2995d.jpg" alt="Logo" className="h-10" />
         </div>
         <div className="ml-auto flex gap-4">
           <FaHeart size={24} />
